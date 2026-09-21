@@ -1,0 +1,30 @@
+import fs from 'node:fs';
+const cfg=fs.readFileSync('lib/du/config.ts','utf8');
+const endpoint=process.env.DU_TEST_ENDPOINT || cfg.match(/ENDPOINT = '([^']+)'/)[1],key=JSON.parse(cfg.match(/ANON_KEY = (.+);/)[1]);
+const call=async(action,body={},token='')=>{const r=await fetch(endpoint,{method:'POST',headers:{'content-type':'application/json',Authorization:`Bearer ${key}`,apikey:key,...(token?{'x-session':token}:{})},body:JSON.stringify({action,...body})});return {status:r.status,...await r.json()}};
+function check(v,msg){if(!v)throw Error(msg);console.log('PASS',msg)}
+const deny=await call('teacher_login',{password:'wrong'});check(!!deny.error,'teacher password rejected');
+const t=await call('teacher_login',{password:'3035'});check(!!t.token,'teacher session');
+const c=await call('create_class',{school_name:'QA_DELETE_ME',level:'elementary'},t.token);check(/^\d{4}$/.test(c.classroom?.code),'four digit class code');
+const a=await call('join',{code:c.classroom.code,nickname:'검수별명'});const b=await call('join',{code:c.classroom.code,nickname:'검수별명'});check(a.student.nickname!==b.student.nickname,'duplicate nickname suffix');
+const save=await call('save_answer',{case_no:1,found_items:['p_name','p_address'],choices:{p_now:1,p_keep:0,p_next:0},completed:true},a.token);check(save.ok,'case one saved');
+const resume=await call('resume',{code:c.classroom.code,nickname:a.student.nickname});check(resume.answers[0].found_items.length===2,'cross device resume');
+const board=await call('board',{class_id:c.classroom.id},t.token);check(board.students.length===2&&board.answers.length===1,'teacher aggregation');
+const forbidden=await call('board',{class_id:c.classroom.id},a.token);check(!!forbidden.error,'student cannot read teacher board');
+const unauth=await call('state');check(!!unauth.error,'missing session rejected');
+fs.writeFileSync('/tmp/du-test-state.json',JSON.stringify({t,c,a,b}));
+
+const cardA=await call('save_card',{surprise:'기록이 남는다는 점',promise:'허락을 받고 사진을 올려요',job_thought:'',stamp:{pattern:'grid',density:65,icon:'shield',shape:'rect',width:40,height:15,margin:1,coverage:50}},a.token);
+const cardB=await call('save_card',{surprise:'단톡방에서도 정보가 새요',promise:'링크를 먼저 확인해요',job_thought:'',stamp:{pattern:'wave',density:70,icon:'lock',shape:'round',width:40,height:15,margin:1,coverage:40}},b.token);
+check(!!cardA.card&&!!cardB.card,'promise and stamp saved');
+check((await call('vote',{card_id:cardB.card.id},a.token)).ok,'classmate stamp vote');
+check(!!(await call('vote',{card_id:cardA.card.id},a.token)).error,'self voting rejected');
+const resumedCard=await call('resume',{code:c.classroom.code,nickname:a.student.nickname});check(resumedCard.card.promise==='허락을 받고 사진을 올려요','promise restored on another device');
+for(const case_no of [2,3,4]) check((await call('save_answer',{case_no,found_items:[],choices:{review:0},reason:'검수',completed:true},a.token)).ok,'case '+case_no+' submission');
+const other=await call('create_class',{school_name:'QA_DELETE_ME_MIDDLE',level:'middle'},t.token);
+const outsider=await call('join',{code:other.classroom.code,nickname:'구름'});check(outsider.classroom.level==='middle','teacher assigned difficulty');
+check(!!(await call('vote',{card_id:cardB.card.id},outsider.token)).error,'cross class voting rejected');
+check((await call('delete_class',{class_id:other.classroom.id,confirm_code:other.classroom.code},t.token)).ok,'second test class removed');
+const del=await call('delete_class',{class_id:c.classroom.id,confirm_code:c.classroom.code},t.token);check(del.ok,'test class cascade deletion');
+const expired=await call('state',{},a.token);check(!!expired.error,'deleted class invalidates student session');
+await call('logout',{},t.token);

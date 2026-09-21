@@ -35,10 +35,11 @@ Supabase `monster-moakit`의 전용 `du_*` 테이블을 사용합니다. 기존 
 - 수업 삭제는 코드 재입력 후 관련 학생·답·카드·투표·학생 세션을 cascade 삭제
 - AI API 호출 없음. 사례·선택 피드백은 검토한 고정 콘텐츠
 
-교실용 공개 주소로 변경하거나 도메인을 바꾸면 Edge Function의 허용 출처도 갱신해야 합니다.
+서버 간 요청만 중계하므로 Vercel의 새 도메인에서도 기존 인증 경계를 유지합니다.
 
 ## 개발과 검증
 
-Node 22.13 이상, pnpm. `pnpm dev`, `pnpm build`. Sites 환경은 포함된 실행 스크립트를 사용합니다.
+Node 22, pnpm. `pnpm dev`, `pnpm build`, `pnpm start`. Vercel에서는 Next.js 프레임워크로 빌드합니다.
+학생의 요청은 같은 도메인의 `/api/activity`를 거쳐 Supabase로 전달됩니다. 서버의 세션·역할 검사를 그대로 유지하며, 배포 주소를 바꿔도 별도의 브라우저 CORS 설정이 필요하지 않습니다.
 `node tests/server-smoke.mjs`는 서버에 `QA_DELETE_ME` 수업을 만든 후 삭제하는 통합 검증입니다.
 `/qa`는 개발 환경에만 표시되는 가상 데이터 화면 검수 도구입니다. 서버에 연결하거나 인증을 우회하지 않습니다. 프로덕션에서는 사용할 수 없습니다.

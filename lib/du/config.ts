@@ -1,0 +1,3 @@
+export const ENDPOINT = 'https://awjndrxyyqyngybulyor.supabase.co/functions/v1/digital-undertaker';
+export const ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF3am5kcnh5eXF5bmd5YnVseW9yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQzMTEwMTUsImV4cCI6MjA5OTg4NzAxNX0.9G8aCw9jG8eSmeUaLOSiD0Fl34GpOD44XVOqTwCMWa4";
+

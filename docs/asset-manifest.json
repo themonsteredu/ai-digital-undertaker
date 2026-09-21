@@ -1,0 +1,135 @@
+{
+  "mode": "built-in image_gen",
+  "assets": [
+    {
+      "name": "scene-parcel",
+      "source": "/workspace/scratch/d429854001f5/generated_images/exec-2ce880fe-398a-4140-bb15-4e02b20ce788.png",
+      "path": "/workspace/scratch/d429854001f5/art-assets/scene-parcel.png",
+      "prompt": "Use case: illustration-story. Asset type: interactive Korean digital privacy education scene. Create one cohesive, clean, restrained editorial illustration with realistic proportions, softly textured painted surfaces, understated depth, quiet natural light. Palette: warm grey and cream, dark navy #142c3c, muted mint and teal accents. Landscape 4:3 aspect ratio. No lettering anywhere, no typography, no pseudo-text, no logos, no watermark, no emojis. All requested label/sign areas must be completely blank and clearly visible for later HTML overlay. Do not create a mockup or UI. Overhead three-quarter view of a realistic illustrated cardboard delivery parcel on a tidy apartment doorstep. A large blank white rectangular shipping label centered prominently on the top face of the parcel, occupying approximately 28% of the image width and 26% height. A separate long blank white paper receipt lies beside the box at the lower right. Plain teal door mat and warm grey stone floor. Minimal composition, focus on the label and receipt.",
+      "width": 1448,
+      "height": 1086,
+      "bytes": 2389570
+    },
+    {
+      "name": "scene-classroom",
+      "source": "/workspace/scratch/d429854001f5/generated_images/exec-76d87a96-86ba-432d-826a-ade3780d1a78.png",
+      "path": "/workspace/scratch/d429854001f5/art-assets/scene-classroom.png",
+      "prompt": "Use case: illustration-story. Asset type: interactive Korean digital privacy education scene. Create one cohesive, clean, restrained editorial illustration with realistic proportions, softly textured painted surfaces, understated depth, quiet natural light. Palette: warm grey and cream, dark navy #142c3c, muted mint and teal accents. Landscape 4:3 aspect ratio. No lettering anywhere, no typography, no pseudo-text, no logos, no watermark, no emojis. All requested label/sign areas must be completely blank and clearly visible for later HTML overlay. Do not create a mockup or UI. A teenage Korean student, about 14 years old, in a classroom taking a friendly casual selfie, upper torso centered-left. Respectful ordinary student portrait, simple navy cardigan over cream shirt. A clearly visible large completely blank cream rectangular name badge on the student's lower-left chest in the image. On the classroom desk at bottom right lies a separate blank white rectangular student ID card. Behind the student, the upper-right quadrant has a large blank pale chalkboard/timetable rectangle clearly visible. No letters or digits on any area, no phone obscuring face, healthy ordinary daylight, restrained teal chairs.",
+      "width": 1448,
+      "height": 1086,
+      "bytes": 2057170
+    },
+    {
+      "name": "scene-street",
+      "source": "/workspace/scratch/d429854001f5/generated_images/exec-5c19bab9-306f-4333-baa9-49d2ef60b2da.png",
+      "path": "/workspace/scratch/d429854001f5/art-assets/scene-street.png",
+      "prompt": "Use case: illustration-story. Asset type: interactive Korean digital privacy education scene. Create one cohesive, clean, restrained editorial illustration with realistic proportions, softly textured painted surfaces, understated depth, quiet natural light. Palette: warm grey and cream, dark navy #142c3c, muted mint and teal accents. Landscape 4:3 aspect ratio. No lettering anywhere, no typography, no pseudo-text, no logos, no watermark, no emojis. All requested label/sign areas must be completely blank and clearly visible for later HTML overlay. Do not create a mockup or UI. A quiet contemporary Korean apartment entrance and small neighborhood street seen straight on, with no people. Include a storefront on upper left with a large completely blank cream horizontal sign. Apartment doorway on upper right has a prominent completely blank pale rectangular apartment-number plaque. At lower right, a parked compact navy car viewed at three-quarter angle, its rear facing us, with a large clearly visible completely blank white rectangular license plate. Calm architectural street scene, simple mint foliage.",
+      "width": 1448,
+      "height": 1086,
+      "bytes": 2668011
+    },
+    {
+      "name": "scene-birthday",
+      "source": "/workspace/scratch/d429854001f5/generated_images/exec-569fa3d5-a8e5-4e6b-8428-dea301757480.png",
+      "path": "/workspace/scratch/d429854001f5/art-assets/scene-birthday.png",
+      "prompt": "Use case: illustration-story. Asset type: interactive Korean digital privacy education scene. Create one cohesive, clean, restrained editorial illustration with realistic proportions, softly textured painted surfaces, understated depth, quiet natural light. Palette: warm grey and cream, dark navy #142c3c, muted mint and teal accents. Landscape 4:3 aspect ratio. No lettering anywhere, no typography, no pseudo-text, no logos, no watermark, no emojis. All requested label/sign areas must be completely blank and clearly visible for later HTML overlay. Do not create a mockup or UI. A single birthday cake on a quiet indoor table, centered in frame. Off-white frosting with restrained pale teal decoration. At center top, exactly THIRTEEN (13) separate clearly visible slim navy and teal birthday candles, each with its own flame, arranged in a shallow arc with all candles visually separated and countable. On the front side of the cake at central lower area a large blank cream horizontal name plaque, completely blank, suitable for later HTML overlay. Cake fills the center, softly blurred warm grey indoor setting, no people, no other props, no numeral candles.",
+      "width": 1448,
+      "height": 1086,
+      "bytes": 1839315
+    },
+    {
+      "name": "slide-01-digital-traces",
+      "source": "/workspace/scratch/d429854001f5/generated_images/exec-bf68b414-bd5d-453f-aeb9-16eb9f6367d3.png",
+      "path": "/workspace/scratch/d429854001f5/art-assets/slide-01-digital-traces.png",
+      "prompt": "Use case: illustration-story. Asset type: full-width teaching slide visual for a Korean digital privacy career education website. Create ONE final image in a landscape 16:9 aspect ratio. Cohesive, clean, restrained editorial realism, a sophisticated realistic illustration with subtle tactile materials and quiet soft natural lighting. Palette: dark navy #142c3c, warm grey and cream, muted mint and teal accents. Simple composed scene with enough calm breathing room, premium educational photography/illustration aesthetic. No lettering, no digits, no text, no pseudo-writing, no logos, no watermark, no emojis, no UI mockup. A quiet professional workstation, wooden desk, one desktop monitor and keyboard, no person. The monitor shows only a few scattered photographic thumbnails of landscapes and everyday personal snapshots, arranged loosely as visual objects against muted navy, without menus or UI controls. A few printed snapshots rest on the desk. Editorial scene about digital traces.",
+      "width": 1672,
+      "height": 941,
+      "bytes": 1773625
+    },
+    {
+      "name": "slide-02-privacy-professional",
+      "source": "/workspace/scratch/d429854001f5/generated_images/exec-7c508fd1-19bb-46f8-8f81-dcb5eeac3f8d.png",
+      "path": "/workspace/scratch/d429854001f5/art-assets/slide-02-privacy-professional.png",
+      "prompt": "Use case: illustration-story. Asset type: full-width teaching slide visual for a Korean digital privacy career education website. Create ONE final image in a landscape 16:9 aspect ratio. Cohesive, clean, restrained editorial realism, a sophisticated realistic illustration with subtle tactile materials and quiet soft natural lighting. Palette: dark navy #142c3c, warm grey and cream, muted mint and teal accents. Simple composed scene with enough calm breathing room, premium educational photography/illustration aesthetic. No lettering, no digits, no text, no pseudo-writing, no logos, no watermark, no emojis, no UI mockup. A Korean adult digital privacy professional wearing simple over-ear headphones, seen from a respectful rear three-quarter angle seated at a calm desk. Exactly three computer screens form a gentle arc in front of them, each showing restrained abstract blocks and photo thumbnails without any words or interface labels. A small notebook and desk lamp. Quiet focused daytime workplace, realistic anatomy.",
+      "width": 1672,
+      "height": 941,
+      "bytes": 1912998
+    },
+    {
+      "name": "slide-03-digital-legacy",
+      "source": "/workspace/scratch/d429854001f5/generated_images/exec-b891fbec-5e66-49cb-b245-31891c866e0e.png",
+      "path": "/workspace/scratch/d429854001f5/art-assets/slide-03-digital-legacy.png",
+      "prompt": "Use case: illustration-story. Asset type: full-width teaching slide visual for a Korean digital privacy career education website. Create ONE final image in a landscape 16:9 aspect ratio. Cohesive, clean, restrained editorial realism, a sophisticated realistic illustration with subtle tactile materials and quiet soft natural lighting. Palette: dark navy #142c3c, warm grey and cream, muted mint and teal accents. Simple composed scene with enough calm breathing room, premium educational photography/illustration aesthetic. No lettering, no digits, no text, no pseudo-writing, no logos, no watermark, no emojis, no UI mockup. A closed old cream linen family photo album with subtly worn edges placed beside a modern dark navy smartphone on a quiet pale wooden table. Phone screen shows one softly lit family photo as a tiny image, without controls or writing. A few old photos peek from the album edge. Warm contemplative still life about digital legacy, no cemetery or funeral imagery.",
+      "width": 1672,
+      "height": 941,
+      "bytes": 2307738
+    },
+    {
+      "name": "slide-04-privacy-review",
+      "source": "/workspace/scratch/d429854001f5/generated_images/exec-05c32e65-bd7c-4a0f-81a4-0e0e554c9e7e.png",
+      "path": "/workspace/scratch/d429854001f5/art-assets/slide-04-privacy-review.png",
+      "prompt": "Use case: illustration-story. Asset type: full-width teaching slide visual for a Korean digital privacy career education website. Create ONE final image in a landscape 16:9 aspect ratio. Cohesive, clean, restrained editorial realism, a sophisticated realistic illustration with subtle tactile materials and quiet soft natural lighting. Palette: dark navy #142c3c, warm grey and cream, muted mint and teal accents. Simple composed scene with enough calm breathing room, premium educational photography/illustration aesthetic. No lettering, no digits, no text, no pseudo-writing, no logos, no watermark, no emojis, no UI mockup. A neat privacy review desk still life viewed from overhead: a real magnifying glass partly overlapping a blank paper checklist with three empty square boxes only, a navy pen, a small closed notebook, and one restrained teal padlock object. Large negative space and careful textures; the checklist has absolutely no writing or pseudo-text.",
+      "width": 1672,
+      "height": 941,
+      "bytes": 2059887
+    },
+    {
+      "name": "slide-05-copy-spread",
+      "source": "/workspace/scratch/d429854001f5/generated_images/exec-7871d5a8-94f6-4239-bed7-4d02a624998e.png",
+      "path": "/workspace/scratch/d429854001f5/art-assets/slide-05-copy-spread.png",
+      "prompt": "Use case: illustration-story. Asset type: full-width teaching slide visual for a Korean digital privacy career education website. Create ONE final image in a landscape 16:9 aspect ratio. Cohesive, clean, restrained editorial realism, a sophisticated realistic illustration with subtle tactile materials and quiet soft natural lighting. Palette: dark navy #142c3c, warm grey and cream, muted mint and teal accents. Simple composed scene with enough calm breathing room, premium educational photography/illustration aesthetic. No lettering, no digits, no text, no pseudo-writing, no logos, no watermark, no emojis, no UI mockup. A conceptual editorial image on a rich dark navy blue #142c3c background: one physical photograph at left, containing a quiet landscape in mint and cream tones, visually fans outward into many duplicate photographic cards to the right. The multiplying copies become an elegant paper cascade, clear coherent perspective, matte paper surfaces, subtle mint highlights, no arrows, no labels, no text.",
+      "width": 1672,
+      "height": 941,
+      "bytes": 1671164
+    },
+    {
+      "name": "slide-06-four-cases",
+      "source": "/workspace/scratch/d429854001f5/generated_images/exec-b33f9f8e-afd9-4acc-95c2-4756ffe8c3eb.png",
+      "path": "/workspace/scratch/d429854001f5/art-assets/slide-06-four-cases.png",
+      "prompt": "Use case: illustration-story. Asset type: full-width teaching slide visual for a Korean digital privacy career education website. Create ONE final image in a landscape 16:9 aspect ratio. Cohesive, clean, restrained editorial realism, a sophisticated realistic illustration with subtle tactile materials and quiet soft natural lighting. Palette: dark navy #142c3c, warm grey and cream, muted mint and teal accents. Simple composed scene with enough calm breathing room, premium educational photography/illustration aesthetic. No lettering, no digits, no text, no pseudo-writing, no logos, no watermark, no emojis, no UI mockup. A balanced studio still life of exactly four distinct objects evenly arranged in a horizontal row on a warm grey surface: a small cardboard parcel with a blank label, an upright modern navy smartphone with blank screen, a small old desktop computer with a blank screen, and a solid mint sculptural speech bubble object. Uniform scale and lighting, enough separation to read each object, no text or symbols on screens.",
+      "width": 1672,
+      "height": 941,
+      "bytes": 1759742
+    },
+    {
+      "name": "slide-07-balance",
+      "source": "/workspace/scratch/d429854001f5/generated_images/exec-175bc9a5-c354-4433-af9b-e8bc2fede5a7.png",
+      "path": "/workspace/scratch/d429854001f5/art-assets/slide-07-balance.png",
+      "prompt": "Use case: illustration-story. Asset type: full-width teaching slide visual for a Korean digital privacy career education website. Create ONE final image in a landscape 16:9 aspect ratio. Cohesive, clean, restrained editorial realism, a sophisticated realistic illustration with subtle tactile materials and quiet soft natural lighting. Palette: dark navy #142c3c, warm grey and cream, muted mint and teal accents. Simple composed scene with enough calm breathing room, premium educational photography/illustration aesthetic. No lettering, no digits, no text, no pseudo-writing, no logos, no watermark, no emojis, no UI mockup. A refined physical balance scale centered on a warm grey desk, softly lit. On its left pan rests a rectangular mint eraser, on its right pan rests a sculptural cream speech bubble, both visible and balanced level. Navy metal frame, tactile material realism, editorial visual metaphor for balancing removal and expression. No words, no text, no labels, no additional icons.",
+      "width": 1672,
+      "height": 941,
+      "bytes": 1640069
+    },
+    {
+      "name": "slide-08-protection",
+      "source": "/workspace/scratch/d429854001f5/generated_images/exec-f14cced7-565c-4daf-a1ca-769b1f2209d1.png",
+      "path": "/workspace/scratch/d429854001f5/art-assets/slide-08-protection.png",
+      "prompt": "Use case: illustration-story. Asset type: full-width teaching slide visual for a Korean digital privacy career education website. Create ONE final image in a landscape 16:9 aspect ratio. Cohesive, clean, restrained editorial realism, a sophisticated realistic illustration with subtle tactile materials and quiet soft natural lighting. Palette: dark navy #142c3c, warm grey and cream, muted mint and teal accents. Simple composed scene with enough calm breathing room, premium educational photography/illustration aesthetic. No lettering, no digits, no text, no pseudo-writing, no logos, no watermark, no emojis, no UI mockup. Two protective shield sculptures standing side by side on a quiet warm grey surface, one navy shield with a small mint eraser inset motif, one mint shield with a simple navy checkmark inset motif. Refined tactile ceramics and enamel, soft realistic shadows, clean symmetrical editorial still life. No words or letters, no badges, no logos, no extra shields.",
+      "width": 1672,
+      "height": 941,
+      "bytes": 1741950
+    },
+    {
+      "name": "slide-09-privacy-stamp",
+      "source": "/workspace/scratch/d429854001f5/generated_images/exec-945cfe67-3f62-4456-94ae-7fb7261eeaa6.png",
+      "path": "/workspace/scratch/d429854001f5/art-assets/slide-09-privacy-stamp.png",
+      "prompt": "Use case: illustration-story. Asset type: full-width teaching slide visual for a Korean digital privacy career education website. Create ONE final image in a landscape 16:9 aspect ratio. Cohesive, clean, restrained editorial realism, a sophisticated realistic illustration with subtle tactile materials and quiet soft natural lighting. Palette: dark navy #142c3c, warm grey and cream, muted mint and teal accents. Simple composed scene with enough calm breathing room, premium educational photography/illustration aesthetic. No lettering, no digits, no text, no pseudo-writing, no logos, no watermark, no emojis, no UI mockup. Close-up of an adult hand pressing a traditional wooden office stamp straight down onto a completely blank white shipping label attached to a cardboard parcel. The stamp and contact point are clearly visible. Navy sleeve, pale wood stamp handle, muted mint desk accessory softly out of focus. Calm deliberate act of protecting private information. No stamped text visible, no lettering anywhere.",
+      "width": 1672,
+      "height": 941,
+      "bytes": 1810196
+    },
+    {
+      "name": "slide-10-promise-card",
+      "source": "/workspace/scratch/d429854001f5/generated_images/exec-c0382284-03ed-4928-b00c-460e2beb72ec.png",
+      "path": "/workspace/scratch/d429854001f5/art-assets/slide-10-promise-card.png",
+      "prompt": "Use case: illustration-story. Asset type: full-width teaching slide visual for a Korean digital privacy career education website. Create ONE final image in a landscape 16:9 aspect ratio. Cohesive, clean, restrained editorial realism, a sophisticated realistic illustration with subtle tactile materials and quiet soft natural lighting. Palette: dark navy #142c3c, warm grey and cream, muted mint and teal accents. Simple composed scene with enough calm breathing room, premium educational photography/illustration aesthetic. No lettering, no digits, no text, no pseudo-writing, no logos, no watermark, no emojis, no UI mockup. Two relaxed human hands gently holding a single completely blank horizontal cream promise card at the center of the image against a calm warm grey background, navy sleeves visible at bottom, soft daylight, realistic skin and paper texture. The card occupies about half the image width and is fully visible and empty for later text overlay, no words, no decoration, no symbols.",
+      "width": 1672,
+      "height": 941,
+      "bytes": 1658211
+    }
+  ],
+  "notes": [
+    "Interactive birthday scene visibly contains 11 candles although 13 were requested; parent informed. No further generations made to comply with one generation per final asset instruction.",
+    "All images are generated originals and require no attribution. No repository files edited."
+  ]
+}
