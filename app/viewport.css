@@ -1,0 +1,89 @@
+/* Keep evidence and navigation inside the available screen, rather than cropping it. */
+.workspace.workspace-fit{height:calc(100dvh - 84px);min-height:0;max-width:none}
+.workspace-fit>.activity-fit{height:100%;min-height:0;max-width:none;margin:0;display:flex;flex-direction:column;padding:18px 28px 12px;overflow:hidden}
+.activity-fit>.activity-top{flex-shrink:0;margin-bottom:8px}
+.activity-fit>.activity-title{flex-shrink:0;margin-bottom:12px}
+.activity-fit>.activity-title h2{font-size:clamp(22px,2.2vw,34px);line-height:1.35}
+.activity-fit>.activity-title p{margin-top:5px;font-size:15px}
+.activity-fit>.activity-actions{flex-shrink:0;margin-top:10px;padding-top:10px;gap:10px}
+.activity-fit>.activity-actions button{padding:9px 16px;min-height:42px}
+.activity-fit>.error{flex-shrink:0;font-size:13px;padding:8px;max-height:90px;overflow:auto}
+.activity-fit>.evidence-layout{flex:1;min-height:0;grid-template-columns:minmax(0,1fr) 230px;align-items:stretch;gap:20px}
+.activity-fit .evidence-main{display:flex;flex-direction:column;min-height:0}
+.activity-fit .document-tabs{margin-bottom:4px;flex-shrink:0}
+.activity-fit .document-tabs button{padding:7px 18px;font-size:15px}
+.activity-fit .evidence-instruction{font-size:14px;margin:6px 0;flex-shrink:0}
+.activity-fit .evidence-toolbar{margin-bottom:7px;flex-shrink:0}
+.activity-fit .evidence-toolbar button{min-height:34px;padding:6px 10px;font-size:13px}
+.activity-fit .evidence-viewport{flex:1;min-height:0;max-height:none}
+.activity-fit .evidence-caption{font-size:11px;margin-top:4px;flex-shrink:0}
+.activity-fit .keyboard-help{margin-top:2px;flex-shrink:0;position:relative}
+.activity-fit .keyboard-help[open] p{position:absolute;bottom:100%;background:white;padding:14px;border:1px solid #cad5d1;z-index:5;box-shadow:0 3px 15px #183d4522}
+.activity-fit .evidence-notes{min-height:0;overflow:auto;border:0;padding:8px 0}
+.activity-fit .evidence-notes h3{font-size:18px}
+.activity-fit .evidence-notes>p{font-size:13px}
+.activity-fit .evidence-review{min-width:0;width:100%;font-size:14px;padding:10px}
+.activity-fit .evidence-review-result{margin-top:14px;padding-top:12px;font-size:14px}
+.activity-fit .evidence-review-result ul{display:block;margin:12px 0}
+.activity-fit>.intro{flex:1;min-height:0;max-width:none;width:100%;margin:0;display:grid;grid-template-columns:minmax(0,1.4fr) minmax(220px,1fr)}
+.activity-fit .intro-visual{height:100%;min-height:0;background:#e4eae7;border-radius:10px 0 0 10px;display:flex;align-items:center;justify-content:center}
+.activity-fit .intro-visual>img,.parcel-intro{display:block;width:100%;height:100%;max-height:100%;object-fit:contain;min-height:0}
+.activity-fit .request{border-radius:0 10px 10px 0;padding:clamp(16px,2.5vw,32px);display:flex;flex-direction:column;justify-content:center;min-height:0;overflow:auto}
+.activity-fit .request blockquote{font-size:clamp(17px,1.7vw,23px);line-height:1.7;margin-top:12px}
+@media(max-width:1100px){.activity-fit>.evidence-layout{grid-template-columns:minmax(0,1fr) 185px;gap:14px}.workspace-fit>.activity-fit{padding:14px 20px 10px}}
+@media(max-width:700px){
+ .workspace.workspace-fit{height:calc(100dvh - 72px);display:flex;flex-direction:column}
+ .workspace-fit>[data-slot=sidebar-wrapper]{flex-shrink:0}
+ .workspace-fit .case-nav{padding:5px 10px}
+ .workspace-fit>.activity-fit{height:auto;flex:1;padding:10px 14px 8px}
+ .activity-fit>.activity-top{margin-bottom:5px;font-size:11px}
+ .activity-fit>.activity-title{margin-bottom:6px}
+ .activity-fit>.activity-title h2{font-size:20px}
+ .activity-fit>.activity-title p{font-size:12px;line-height:1.4}
+ .activity-fit>.evidence-layout{display:flex;flex-direction:column;gap:5px}
+ .activity-fit .evidence-main{flex:1;min-height:0}
+ .activity-fit .evidence-caption,.activity-fit .keyboard-help{display:none}
+ .activity-fit .evidence-instruction{font-size:12px;margin:4px 0}
+ .activity-fit .evidence-toolbar{gap:4px;margin-bottom:5px}
+ .activity-fit .evidence-toolbar button{padding:5px 7px;font-size:11px;min-height:32px}
+ .activity-fit .document-tabs button{font-size:13px;padding:5px 10px}
+ .activity-fit .evidence-notes{flex-shrink:0;max-height:115px;display:grid;grid-template-columns:1fr auto;gap:2px 10px;align-items:center;padding:3px 0}
+ .activity-fit .evidence-notes h3{font-size:13px}
+ .activity-fit .evidence-notes>p{font-size:11px;margin:0}
+ .activity-fit .evidence-notes>.muted{display:none}
+ .activity-fit .evidence-review{grid-column:2;grid-row:1/3;width:auto;margin:0;min-height:34px;font-size:12px;padding:7px 10px}
+ .activity-fit .mark-list{grid-column:1/-1;margin:0;gap:4px;max-height:30px;overflow:auto}
+ .activity-fit .mark-list:empty{display:none}
+ .activity-fit .evidence-review-result{grid-column:1/-1;margin-top:2px;padding-top:4px;font-size:12px}
+ .activity-fit .evidence-review-result ul{margin:4px 0}.activity-fit .evidence-review-result li{font-size:12px}
+ .activity-fit>.activity-actions{margin-top:5px;padding-top:6px}
+ .activity-fit>.activity-actions button{min-height:36px;padding:7px 10px;font-size:13px}
+ .activity-fit>.intro{display:flex;flex-direction:column}
+ .activity-fit .intro-visual{flex:1;height:auto;border-radius:8px 8px 0 0}
+ .activity-fit .request{flex-shrink:0;overflow:auto;max-height:42%;padding:12px 15px;border-radius:0 0 8px 8px}
+ .activity-fit .request .eyebrow{font-size:11px}
+ .activity-fit .request blockquote{font-size:15px;line-height:1.55;margin-top:6px}
+}
+
+@media(max-height:760px){
+ .app-header.app-header-fit{height:64px}
+ .workspace.workspace-fit{height:calc(100dvh - 64px)}
+ .workspace-fit>.activity-fit{padding-top:10px;padding-bottom:8px}
+ .workspace-fit .case-nav{padding-top:14px;padding-bottom:14px}
+ .workspace-fit .case-nav button{margin:5px 0;padding-top:10px;padding-bottom:10px}
+ .workspace-fit .case-nav small{font-size:11px;padding:10px}
+ .activity-fit>.activity-top{margin-bottom:4px}
+ .activity-fit>.activity-title{margin-bottom:6px}
+ .activity-fit>.activity-title h2{font-size:clamp(20px,2vw,28px)}
+ .activity-fit>.activity-title p{font-size:13px;margin-top:3px;line-height:1.4}
+ .activity-fit .document-tabs+.evidence-instruction{display:none}
+ .activity-fit .evidence-caption{line-height:1.3}
+ .activity-fit .keyboard-help{display:none}
+ .activity-fit>.activity-actions{margin-top:6px;padding-top:6px}
+ .activity-fit>.activity-actions button{min-height:36px;padding:7px 12px;font-size:14px}
+}
+@media(max-width:700px) and (max-height:760px){
+ .workspace-fit .case-nav{padding:3px 10px}
+ .workspace-fit .case-nav button{margin:0;padding:8px}
+ .workspace-fit>.activity-fit{padding-top:8px}
+}

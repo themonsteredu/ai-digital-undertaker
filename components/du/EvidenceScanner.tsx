@@ -1,5 +1,5 @@
 "use client";
-import { useId, useRef, useState, type PointerEvent, type KeyboardEvent } from 'react';
+import { useEffect, useId, useRef, useState, type PointerEvent, type KeyboardEvent } from 'react';
 import { Check, Hand, Pencil, RotateCcw, ZoomIn, X } from 'lucide-react';
 import type { Step } from '@/lib/du/content';
 import { matchEvidence, type Mark, type ScanValue } from '@/lib/du/evidence';
@@ -21,6 +21,17 @@ export default function EvidenceScanner({ step, value, found, onChange }: {
   const panStart = useRef<{ x: number; y: number; left: number; top: number } | null>(null);
   const marks = value?.marks || [], reviewed = value?.reviewed ?? found.length > 0;
   const instructions = useId();
+  const [fitWidth, setFitWidth] = useState<number>();
+  const [photoRatio, setPhotoRatio] = useState(4 / 3);
+  const ratio = parcel ? document === 'receipt' ? 600 / 960 : 1000 / 690 : photoRatio;
+  useEffect(() => {
+    const element = viewport.current;
+    if (!element) return;
+    const fit = () => setFitWidth(Math.max(1, Math.min(element.clientWidth - 24, (element.clientHeight - 24) * ratio)) + 24);
+    const observer = new ResizeObserver(fit);
+    observer.observe(element); fit();
+    return () => observer.disconnect();
+  }, [ratio]);
   const ownMarks = marks.map((mark, i) => ({ ...mark, i })).filter(mark => mark.document === document);
   function change(next: Mark[]) { onChange({ marks: next, reviewed: false }, []); }
   function add(mark: Mark) {
@@ -80,16 +91,16 @@ export default function EvidenceScanner({ step, value, found, onChange }: {
       <p className="evidence-instruction" id={instructions}>개인정보가 담긴 부분을 직접 드래그해 표시하세요.</p>
       <div className="evidence-toolbar">
         <div><button className="icon-btn" aria-pressed={!pan} onClick={() => setPan(false)}><Pencil size={17} />표시</button><button className="icon-btn" aria-pressed={pan} onClick={() => setPan(true)}><Hand size={17} />이동</button></div>
-        <button className="icon-btn" aria-pressed={zoom} onClick={() => setZoom(!zoom)}><ZoomIn size={17} />{zoom ? '축소' : '확대'}</button>
+        <button className="icon-btn" aria-pressed={zoom} onClick={() => setZoom(!zoom)}><ZoomIn size={17} />{zoom ? '화면 맞춤' : '확대'}</button>
         <button className="icon-btn" onClick={() => change(marks.slice(0, -1))} disabled={!marks.length}><RotateCcw size={17} />되돌리기</button>
       </div>
       <div ref={viewport} className={'evidence-viewport ' + (parcel ? 'paper-desk' : '')}>
-        <div className={'evidence-size ' + (document === 'receipt' ? 'receipt-size' : '')} style={zoom ? { width: '180%', maxWidth: 'none' } : undefined}>
+        <div className={'evidence-size ' + (document === 'receipt' ? 'receipt-size' : '')} style={{ width: fitWidth ? fitWidth * (zoom ? 1.8 : 1) : '100%', maxWidth: 'none', padding: 12 }}>
           <div className={'evidence-surface ' + (pan ? 'pan-mode' : '')} tabIndex={0} aria-label="직접 표시하는 조사 자료" aria-describedby={instructions}
             onPointerDown={down} onPointerMove={move} onPointerUp={up}
             onPointerCancel={() => { start.current = null; panStart.current = null; setDraft(null); }} onKeyDown={key}>
             {parcel ? <ParcelPaper document={document as 'label' | 'receipt'} /> : <>
-              <img className="evidence-photo" draggable={false} src={`/art/scene-${step.scene}.png`} alt={step.title} />
+              <img className="evidence-photo" draggable={false} onLoad={event => setPhotoRatio(event.currentTarget.naturalWidth / event.currentTarget.naturalHeight)} src={`/art/scene-${step.scene}.png`} alt={step.title} />
               {step.items?.filter(item => item.text).map(item => <span key={item.id} className={`evidence-text field-${item.id}`} style={{ left: `${item.x}%`, top: `${item.y}%`, width: `${item.w}%`, height: `${item.h}%` }}>{item.text}</span>)}
             </>}
             {ownMarks.map(mark => <span key={mark.i} className="evidence-mark" style={{ left: `${mark.x}%`, top: `${mark.y}%`, width: `${mark.w}%`, height: `${mark.h}%` }}><b>{mark.i + 1}</b></span>)}
