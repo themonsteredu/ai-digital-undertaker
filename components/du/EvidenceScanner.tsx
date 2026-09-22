@@ -1,15 +1,16 @@
 "use client";
 import { useEffect, useId, useRef, useState, type PointerEvent, type KeyboardEvent } from 'react';
 import { Check, Hand, Pencil, RotateCcw, ZoomIn, X } from 'lucide-react';
-import type { Step } from '@/lib/du/content';
-import { matchEvidence, type Mark, type ScanValue } from '@/lib/du/evidence';
+import type { Step, Level } from '@/lib/du/content';
+import { reviewEvidence, scanHints, type Mark, type ScanValue } from '@/lib/du/evidence';
+import { Hint } from './Investigation';
 
 type Point = { x: number; y: number };
 const clamp = (n: number) => Math.max(0, Math.min(100, n));
 const rect = (start: Point, end: Point, document: string): Mark => ({ document, x: Math.min(start.x, end.x), y: Math.min(start.y, end.y), w: Math.abs(start.x - end.x), h: Math.abs(start.y - end.y) });
 
-export default function EvidenceScanner({ step, value, found, onChange }: {
-  step: Step; value?: ScanValue; found: string[]; onChange: (value: ScanValue, found: string[]) => void;
+export default function EvidenceScanner({ step, level, value, onChange }: {
+  step: Step; level: Level; value?: ScanValue; onChange: (value: ScanValue, found: string[]) => void;
 }) {
   const parcel = step.scene === 'parcel';
   const [document, setDocument] = useState(parcel ? 'label' : 'scene');
@@ -18,7 +19,8 @@ export default function EvidenceScanner({ step, value, found, onChange }: {
   const start = useRef<Point | null>(null), keyboardStart = useRef<Point | null>(null);
   const viewport = useRef<HTMLDivElement>(null);
   const panStart = useRef<{ x: number; y: number; left: number; top: number } | null>(null);
-  const marks = value?.marks || [], reviewed = value?.reviewed ?? found.length > 0;
+  const marks = value?.marks || [], reviewed = value?.reviewed === true;
+  const result = reviewEvidence(value, step, level);
   const instructions = useId();
   const [fitWidth, setFitWidth] = useState<number>();
   const [ratio, setPhotoRatio] = useState(parcel ? 1000 / 690 : 4 / 3);
@@ -31,7 +33,7 @@ export default function EvidenceScanner({ step, value, found, onChange }: {
     return () => observer.disconnect();
   }, [ratio]);
   const ownMarks = marks.map((mark, i) => ({ ...mark, i })).filter(mark => mark.document === document);
-  function change(next: Mark[]) { onChange({ marks: next, reviewed: false }, []); }
+  function change(next: Mark[]) { onChange({ ...value, marks: next, reviewed: false }, []); }
   function add(mark: Mark) {
     if (marks.length >= 18) return;
     if (mark.w < 1 || mark.h < 1) {
@@ -115,9 +117,10 @@ export default function EvidenceScanner({ step, value, found, onChange }: {
       <div className="mark-list">{marks.map((mark, i) => <button key={i} onClick={() => change(marks.filter((_, index) => index !== i))} aria-label={`${i + 1}번 표시 지우기`}><b>{i + 1}</b>{parcel ? mark.document === 'receipt' ? '영수증' : '송장' : '사진'}<X size={15} /></button>)}</div>
       {!marks.length && <p className="muted">자료에서 가려야 할 부분을 찾아 직접 표시해 보세요.</p>}
       {marks.length >= 18 && <p className="muted">표시가 많아졌어요. 필요 없는 표시를 지우고 다시 골라 보세요.</p>}
-      <button className="primary evidence-review" onClick={() => onChange({ marks, reviewed: true }, matchEvidence(marks, step.items || [], step.scene || ''))}>표시한 곳 확인</button>
-      {reviewed && <div className="evidence-review-result" role="status"><b>{found.length}가지 정보를 확인했어요.</b><ul>{step.items?.filter(item => found.includes(item.id)).map(item => <li key={item.id}><Check size={16} /><span>{item.label}<small>{item.detail}</small></span></li>)}</ul><p className="muted">다 찾지 못해도 다음으로 갈 수 있어요.</p></div>}
+      <button className="primary evidence-review" disabled={!marks.length} onClick={() => onChange({ ...value, marks, reviewed: true, attempts: (value?.attempts || 0) + 1 }, result.passed ? result.found : [])}>표시한 곳 확인</button>
+      {reviewed && <div className="evidence-review-result" role="status"><b>{result.passed ? '표시를 확인했어요.' : '한 번 더 살펴보세요.'}</b>{result.passed && <ul>{step.items?.filter(item => result.found.includes(item.id)).map(item => <li key={item.id}><Check size={16} /><span>{item.label}<small>{item.detail}</small></span></li>)}</ul>}<p className="muted">{result.message}</p></div>}
       {!reviewed && <p className="muted">표시를 마친 뒤 확인 버튼을 눌러 주세요.</p>}
+      <Hint hints={scanHints(step.scene || '')} count={value?.hints || 0} onMore={() => onChange({ ...value, marks, reviewed, hints: Math.min((value?.hints || 0) + 1, 2) }, reviewed && result.passed ? result.found : [])} />
     </aside>
   </div>;
 }

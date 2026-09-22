@@ -12,7 +12,7 @@ export type Item = {
     safe?: boolean;
 };
 export type Step = {
-    kind: 'intro' | 'scan' | 'choice' | 'settings' | 'accounts' | 'report';
+    kind: 'intro' | 'scan' | 'inquiry' | 'choice' | 'settings' | 'accounts' | 'report';
     id: string;
     title: string;
     hint?: string;
@@ -77,7 +77,22 @@ export const CASES: Case[] = [
             choice('c_help', '누구에게 도움을 요청할까요?', ['부모님이나 선생님', '친구끼리만 이야기', '혼자 해결하기'], ['학교폭력이나 불법 촬영물이 의심되면 즉시 알려 주세요.', '친구의 응원과 함께 어른의 도움도 필요해요.', '이건 혼자 해결해야 하는 일이 아니에요.'])
         ] }
 ];
-export function stepsFor(n: number, level: Level): Step[] { const c = CASES[n - 1]; return [{ kind: 'intro', id: 'intro', title: c.title }, ...c.steps.filter(s => !s.middle || level === 'middle').map(s => ({ ...s, items: s.items?.filter(i => level === 'middle' || i.el !== false) })), { kind: 'report', id: 'report', title: '해결 보고서' }]; }
+export function stepsFor(n: number, level: Level): Step[] {
+    const c = CASES[n - 1];
+    const activities = c.steps.filter(s => !s.middle || level === 'middle').map((s): Step => {
+        const step = { ...s, items: s.items?.filter(i => level === 'middle' || i.el !== false) };
+        if (s.id === 'search') return { ...step, kind: 'inquiry', title: '검색 결과가 정말 수아의 기록일까요?', hint: '의뢰인의 기억과 검색 결과를 비교한 뒤 판단하세요.', items: step.items?.filter(i => i.id === 'a_greeting') };
+        if (s.id === 'chat') return { ...step, kind: 'inquiry', title: '대화의 앞뒤를 살펴 판단해요', hint: '어디까지 허락했는지, 어떤 정보를 요구하는지 살펴보세요.', items: s.items?.filter(i => ['c_photo', 'c_link', 'c_form'].includes(i.id)) };
+        if (s.kind === 'scan') return { ...step, hint: '스스로 살펴보고, 공개하지 않을 부분을 표시하세요.' };
+        if (s.id === 's_mine') return { ...step, options: ['공개 사진을 내리고 필요한 추억은 따로 보관하기', '명찰·배경·학생증을 가린 뒤 공개 범위를 정해 다시 올리기', '이름만 가리고 전체 공개로 두기'], feedback: ['공개를 멈춰 노출을 줄일 수 있어요. 이미 공유된 사본이 있는지도 확인해요.', '사진을 남기면서 노출을 줄이는 방법이에요. 친구의 동의와 다른 게시물의 단서도 함께 확인해요.', '이름을 가려도 배경과 다른 게시물에서 다시 알아볼 수 있어요.'], reason: true };
+        if (level === 'middle' && s.id === 'p_now') return { ...step, options: ['이름과 전화번호만 가리고 상자째 내놓기', '송장과 영수증을 떼어 내용을 읽기 어렵게 잘게 찢기', '송장은 찢고 영수증은 상자 안에 넣어 버리기'], feedback: ['주소와 주문 정보, 다른 자료에도 흔적이 남아요.', '상자와 함께 버리는 자료까지 확인하고 읽기 어렵게 처리해요.', '영수증에도 같은 사람의 정보가 남을 수 있어요.'] };
+        if (level === 'middle' && s.id === 'p_keep') return { ...step, options: ['가림 도장을 촘촘히 찍고 빛에 비춰 남은 글씨도 확인하기', '받는 사람 칸만 스티커로 가리고 바코드는 남기기', '주소만 가린 뒤 나머지는 상자를 버릴 때 확인하기'], feedback: ['가린 뒤 글씨와 바코드가 다시 읽히는지 확인해요.', '바코드와 주문 정보도 함께 살펴야 해요.', '상자를 쓰는 동안에도 정보가 드러날 수 있어요.'] };
+        return step;
+    });
+    // Append new work before the report; all existing activity indices stay stable.
+    const connections: Step[] = n === 1 ? [{ kind: 'inquiry', id: 'p_connections', title: '한 장만 가리면 충분할까요?', hint: '관련된 자료를 골라 내 판단을 뒷받침하세요.' }] : n === 2 ? [{ kind: 'inquiry', id: 's_connections', title: '게시물을 함께 보면 무엇이 드러날까요?', hint: '확인한 사실과 짐작한 내용을 구분하세요.' }] : [];
+    return [{ kind: 'intro', id: 'intro', title: c.title }, ...activities, ...connections, { kind: 'report', id: 'report', title: '해결 보고서' }];
+}
 export function riskItems(n: number, level: Level) { return stepsFor(n, level).flatMap(s => s.items || []).filter(i => !i.safe); }
 export const ACCOUNTS = [['a1', '모아게임', '2016', '2017.03'], ['a2', '추억사진', '2017', '2018.06'], ['a3', '오늘의메일', '2018', '이번 주'], ['a4', '별빛카페', '2016', '2016.12'], ['a5', '학교배움터', '2020', '어제'], ['a6', '책나무', '2019', '2020.02'], ['a7', '음악상자', '2022', '오늘'], ['a8', '공부친구', '2018', '2019.09']];
 export { LESSON_SLIDES as SLIDES } from './slides';
