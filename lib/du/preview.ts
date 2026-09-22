@@ -5,7 +5,10 @@ export const previewAnswers = [{ id: 'preview-answer', student_id: 'preview-frie
 export const previewCards = [{ id: 'preview-card', student_id: 'preview-friend', surprise: '사진 배경에서도 정보를 알 수 있어요.', promise: '사진을 올리기 전에 배경을 살펴볼게요.', job_thought: '무엇을 지울지 판단하는 일', stamp: { ...DEFAULT_STAMP, coverage: 45 } }];
 const state: any = { classroom: previewClass, students: previewStudents, answers: previewAnswers, cards: previewCards, votes: [] };
 export function previewInitial(level: string, n = 1, index = 0) { return { classroom: { ...previewClass, level }, student: { ...previewStudents[0], current_case: n, current_step: index }, answers: [1, 2, 3, 4].map(case_no => ({ case_no, found_items: [], choices: {}, reason: '', completed: n === 5 })), card: null }; }
-export async function previewApi(action: string, b: any) { if (action === 'classes')
+export async function previewApi(action: string, b: any) {
+    const delay = typeof window === 'undefined' ? 0 : Math.min(5000, Math.max(0, Number(new URLSearchParams(window.location.search).get('saveDelay')) || 0));
+    if (delay && ['save_answer', 'progress'].includes(action)) await new Promise(resolve => setTimeout(resolve, delay));
+    if (action === 'classes')
     return { classes: [previewClass] }; if (action === 'board')
     return state; if (action === 'class_summary' || action === 'gallery')
     return { ...state, averages: [1, 2, 3, 4].map(case_no => ({ case_no, average: 2.5, count: 1 })) }; if (action === 'save_answer') {
