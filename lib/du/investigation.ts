@@ -4,7 +4,7 @@ export type Source = { id: string; title: string; text: string; image?: string }
 export type InquiryQuestion = {
   id: string; prompt: string; options: string[]; answer: number;
   evidence: string[]; reasons: string[]; reason: number;
-  retry: string; hints: string[]; explanation: string; found?: string[]; middle?: boolean;
+  retry: string; hints: string[]; explanation: string; found?: string[]; middle?: boolean; focusSource?: string;
 };
 export type Inquiry = { sources: Source[]; questions: InquiryQuestion[] };
 export type InquiryAnswer = { sources: string[]; choice?: number; reason?: number; reviewed?: boolean; attempts?: number; hints?: number; firstChoice?: number };
@@ -34,7 +34,7 @@ export const INQUIRIES: Record<string, Inquiry> = {
       { id: 'birthday', title: 'C · 주말 게시물', image: 'scene-birthday-photo.webp', text: '9월 19일 토요일 14:00 · 같은 계정\n“오늘은 친구들과 여기서 생일 파티!”' },
     ],
     questions: [
-      { id: 'location', prompt: '거리 사진과 생일 사진을 함께 본 사람이 짐작할 수 있는 것은?',
+      { id: 'location', focusSource: 'street', prompt: '거리 사진과 생일 사진을 함께 본 사람이 짐작할 수 있는 것은?',
         options: ['사진만으로 정확한 집 호수를 알 수 있다', '사진을 찍은 곳은 반드시 지호의 집이다', '자주 머무는 동네를 좁혀 볼 수 있지만 집을 확정할 수는 없다'], answer: 2,
         evidence: ['street', 'birthday'], reasons: ['건물 단서와 초대장 장소가 연결되지만 방문한 장소일 수도 있다', '사진에 나온 모든 장소는 촬영자의 집이다', '생일 케이크가 보이면 집 주소도 알 수 있다'], reason: 0,
         retry: '자료에 실제로 보이는 것과 아직 확인하지 못한 것을 나눠 보세요.',
@@ -50,24 +50,24 @@ export const INQUIRIES: Record<string, Inquiry> = {
   },
   search: {
     sources: [
-      { id: 'request', title: '의뢰인의 기억', text: '수아: “2016년에 모아초 4학년이었고, 게임 카페에서 달토끼라는 닉네임을 썼어요. 그때 종이접기를 좋아했어요. 지금은 사진 계정 하나만 써요.”' },
+      { id: 'request', title: '의뢰인의 기억', text: '수아: “2016년에 모아초 4학년이었어요. 게임 카페에서는 달토끼라는 닉네임을 썼고, 종이접기를 좋아했어요. 그때 남긴 글을 찾아 정리하고 싶어요.”' },
       { id: 'cafe', title: 'A · 달토끼의 첫 인사', text: '모아게임 카페 · 2016.03.12\n“수아예요. 모아초 4학년입니다. 종이접기도 좋아해요. 생일은 5월 18일!”\n작성자: 달토끼 · 전체 공개' },
       { id: 'blog', title: 'B · 달토끼의 일기', text: '달토끼 블로그 · 2016.03.18\n“수아의 일기. 오늘 종이접기를 했어요.”\n학교·학년은 보이지 않음 · 전체 공개' },
       { id: 'photo', title: 'C · 수아의 사진 작업실', text: '사진 작업실 · 2016.03.20\n“대학 졸업 사진전을 준비합니다.”\n작성자: 수아 · 작품 소개 · 전체 공개' },
     ],
     questions: [
-      { id: 'owner', prompt: '어느 기록부터 수아와 본인 여부를 확인하는 것이 좋을까요?',
+      { id: 'owner', prompt: '수아의 기억과 가장 잘 맞는 기록은 무엇인가요?',
         options: ['A · 달토끼의 첫 인사', 'B · 달토끼의 일기', 'C · 수아의 사진 작업실'], answer: 0,
         evidence: ['request', 'cafe'], reasons: ['닉네임이 한 번 같으면 본인 기록이 확실하다', '이름·당시 학교와 학년·닉네임이 의뢰인의 기억과 함께 맞는다', '가장 최근에 검색된 결과가 본인 계정이다'], reason: 1,
         retry: '이름 하나만 보지 말고 당시의 기록이 의뢰인의 기억과 함께 맞는지 확인하세요.',
         hints: ['같은 이름이나 닉네임을 쓰는 다른 사람도 있을 수 있어요.', '의뢰인의 기억과 게시물의 연도·학교·학년을 나란히 확인해 보세요.'],
-        explanation: 'A는 이름뿐 아니라 2016년의 학교·학년·닉네임도 일치해 우선 확인할 근거가 충분해요. 실제 삭제 요청 전에 수아에게 본인의 글인지 다시 확인합니다.', found: ['a_greeting'] },
-      { id: 'uncertain', middle: true, prompt: 'B도 닉네임과 관심사가 같아요. 지금 어떻게 처리할까요?',
-        options: ['A가 본인 글이므로 B도 함께 삭제 요청한다', '정보가 부족하므로 수아에게 B의 계정도 썼는지 먼저 묻는다', '학교가 없으므로 다른 사람의 글이라고 확정한다'], answer: 1,
+        explanation: 'A에는 수아가 기억하는 이름·연도·학교·학년·닉네임이 함께 나와 있어요. 기억과 가장 잘 맞는 기록이지만, 아직 본인 확인이 끝난 것은 아니에요. 삭제를 요청하기 전에 수아에게 직접 확인해야 합니다.', found: ['a_greeting'] },
+      { id: 'uncertain', middle: true, focusSource: 'blog', prompt: 'B · 달토끼의 일기를 수아가 썼다고 확신할 수 있을까요?',
+        options: ['닉네임과 취미가 같으니 수아의 글로 보고 삭제를 요청한다', '수아에게 이 블로그를 썼는지 먼저 확인한다', '학교·학년이 없으니 다른 사람의 글이라고 확정한다'], answer: 1,
         evidence: ['request', 'blog'], reasons: ['학교가 표시되지 않으면 개인정보가 전혀 없다', '관심사가 같으면 같은 사람이다', '공통점은 있지만 본인 여부를 결정할 단서가 부족하다'], reason: 2,
         retry: '모르는 내용을 억지로 확정하지 않아도 돼요. 다음 확인 절차를 생각해 보세요.',
         hints: ['“그럴 수 있다”와 “확인했다”는 달라요.', '이름·닉네임·관심사가 같아도 우연히 겹칠 수 있어요. 의뢰인에게 계정 사용 여부를 물을 수 있어요.'],
-        explanation: 'B는 본인일 가능성이 있지만 단정할 수 없어요. 계정 사용 여부를 먼저 확인하고, 확인 전에는 다른 사람의 기록을 지우려 하지 않습니다.' },
+        explanation: 'B의 이름·닉네임·취미는 수아의 기억과 같지만, 당시 학교·학년은 확인할 수 없어요. 같은 사람인지 다른 사람인지 아직 단정할 수 없습니다. 수아에게 이 블로그를 썼는지 먼저 물어봐야 해요.' },
     ],
   },
   chat: {
@@ -85,7 +85,7 @@ export const INQUIRIES: Record<string, Inquiry> = {
         retry: '누가 무엇을 허락했는지 먼저 읽고, 실제 공유한 범위와 비교하세요.',
         hints: ['사진이 있는 모든 메시지가 잘못된 공유는 아니에요.', '태윤이 말한 “이 방”과 하늘이 보낸 “다른 방”을 비교해 보세요.'],
         explanation: '모둠방 안에서 보도록 한 허락이 다른 방으로 보내도 된다는 뜻은 아니에요. 하늘에게 삭제와 추가 공유 중단을 요청해야 합니다.', found: ['c_photo'] },
-      { id: 'offer', prompt: '선물 안내창에서 정보를 입력하기 전에 어떻게 판단해야 할까요?',
+      { id: 'offer', focusSource: 'offer', prompt: '선물 안내창에서 정보를 입력하기 전에 어떻게 판단해야 할까요?',
         options: ['친구가 전달했으니 부모님 번호까지 입력한다', '선물과 무관한 정보 요구를 멈추고 공식 안내인지 확인한다', '내 번호만 실제 번호로 쓰고 부모님 번호는 지어낸다'], answer: 1,
         evidence: ['offer'], reasons: ['무료인 행사는 모두 거짓이다', '마감 시간이 있으므로 검증된 행사다', '급하게 행동하도록 하며 선물에 왜 필요한지 설명 없는 연락처를 요구한다'], reason: 2,
         retry: '무료라는 말만 보지 말고, 무엇을 왜 요구하는지 살펴보세요.',
