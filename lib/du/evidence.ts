@@ -3,15 +3,16 @@ import type { Item } from './content';
 export type Mark = { document: string; x: number; y: number; w: number; h: number };
 export type ScanValue = { marks: Mark[]; reviewed: boolean };
 type Target = Mark & { id: string };
-const label = (id: string, x: number, y: number, w: number, h: number): Target => ({ id, document: 'label', x: x / 10, y: y / 6.9, w: w / 10, h: h / 6.9 });
-const receipt = (x: number, y: number, w: number, h: number): Target => ({ id: 'p_receipt', document: 'receipt', x: x / 6, y: y / 9.6, w: w / 6, h: h / 9.6 });
+// Percent coordinates measured from the final photographs, not rendered text layers.
+const target = (id: string, document: string, x: number, y: number, w: number, h: number): Target => ({ id, document, x, y, w, h });
 const PARCEL_TARGETS: Target[] = [
-  label('p_name', 152, 302, 158, 42),
-  label('p_phone', 546, 304, 354, 39),
-  label('p_address', 150, 365, 649, 75),
-  label('p_product', 153, 533, 516, 43),
-  label('p_barcode', 104, 168, 794, 116),
-  receipt(37, 328, 510, 143), receipt(38, 628, 504, 149),
+  target('p_name', 'label', 25, 47, 14, 7),
+  target('p_phone', 'label', 52, 47, 25, 7),
+  target('p_address', 'label', 25, 55.5, 43, 11),
+  target('p_product', 'label', 25, 78.5, 34, 6),
+  target('p_barcode', 'label', 22, 25, 57, 19),
+  target('p_receipt', 'receipt', 17, 30.5, 66, 15),
+  target('p_receipt', 'receipt', 17, 64.5, 53, 13),
 ];
 
 export function matchEvidence(marks: Mark[], items: Item[], scene: string): string[] {

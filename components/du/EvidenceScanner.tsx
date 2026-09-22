@@ -3,7 +3,6 @@ import { useEffect, useId, useRef, useState, type PointerEvent, type KeyboardEve
 import { Check, Hand, Pencil, RotateCcw, ZoomIn, X } from 'lucide-react';
 import type { Step } from '@/lib/du/content';
 import { matchEvidence, type Mark, type ScanValue } from '@/lib/du/evidence';
-import ParcelPaper from './ParcelPaper';
 
 type Point = { x: number; y: number };
 const clamp = (n: number) => Math.max(0, Math.min(100, n));
@@ -22,8 +21,7 @@ export default function EvidenceScanner({ step, value, found, onChange }: {
   const marks = value?.marks || [], reviewed = value?.reviewed ?? found.length > 0;
   const instructions = useId();
   const [fitWidth, setFitWidth] = useState<number>();
-  const [photoRatio, setPhotoRatio] = useState(4 / 3);
-  const ratio = parcel ? document === 'receipt' ? 600 / 960 : 1000 / 690 : photoRatio;
+  const [ratio, setPhotoRatio] = useState(parcel ? 1000 / 690 : 4 / 3);
   useEffect(() => {
     const element = viewport.current;
     if (!element) return;
@@ -99,17 +97,17 @@ export default function EvidenceScanner({ step, value, found, onChange }: {
           <div className={'evidence-surface ' + (pan ? 'pan-mode' : '')} tabIndex={0} aria-label="직접 표시하는 조사 자료" aria-describedby={instructions}
             onPointerDown={down} onPointerMove={move} onPointerUp={up}
             onPointerCancel={() => { start.current = null; panStart.current = null; setDraft(null); }} onKeyDown={key}>
-            {parcel ? <ParcelPaper document={document as 'label' | 'receipt'} /> : <>
-              <img className="evidence-photo" draggable={false} onLoad={event => setPhotoRatio(event.currentTarget.naturalWidth / event.currentTarget.naturalHeight)} src={`/art/scene-${step.scene}.png`} alt={step.title} />
-              {step.items?.filter(item => item.text).map(item => <span key={item.id} className={`evidence-text field-${item.id}`} style={{ left: `${item.x}%`, top: `${item.y}%`, width: `${item.w}%`, height: `${item.h}%` }}>{item.text}</span>)}
-            </>}
+            <img className="evidence-photo" draggable={false}
+              onLoad={event => setPhotoRatio(event.currentTarget.naturalWidth / event.currentTarget.naturalHeight)}
+              src={parcel ? `/art/${document}-photo.webp` : `/art/scene-${step.scene}-photo.webp`}
+              alt={parcel ? document === 'label' ? '택배 송장 사진' : '구매 영수증 사진' : step.title} />
             {ownMarks.map(mark => <span key={mark.i} className="evidence-mark" style={{ left: `${mark.x}%`, top: `${mark.y}%`, width: `${mark.w}%`, height: `${mark.h}%` }}><b>{mark.i + 1}</b></span>)}
             {draft && <span className="evidence-mark draft" style={{ left: `${draft.x}%`, top: `${draft.y}%`, width: `${draft.w}%`, height: `${draft.h}%` }} />}
             {cursor && <span className="evidence-cursor" style={{ left: `${cursor.x}%`, top: `${cursor.y}%` }} />}
           </div>
         </div>
       </div>
-      <p className="evidence-caption">{parcel ? '실제 인쇄 형식을 재현한 수업 자료입니다. 이름·주소·거래내역은 모두 가상입니다.' : '수업용 사진입니다. 작은 글씨와 배경도 살펴보세요.'}</p>
+      <p className="evidence-caption">{parcel ? '수업용 가상 자료입니다. 이름·주소·거래내역은 모두 가상입니다.' : '수업용 사진입니다. 작은 글씨와 배경도 살펴보세요.'}</p>
       <details className="keyboard-help"><summary>키보드로 표시하기</summary><p>자료에 초점을 놓고 방향키로 이동하세요. Enter로 시작점을 정한 뒤 방향키로 범위를 넓히고, Enter로 표시합니다. Shift와 방향키를 함께 누르면 크게 이동합니다.</p></details>
     </section>
     <aside className="evidence-notes">
