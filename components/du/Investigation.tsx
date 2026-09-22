@@ -1,7 +1,7 @@
 "use client";
 import { useRef, useState } from 'react';
 import type { Level } from '@/lib/du/content';
-import { INQUIRIES, inquiryCorrect, questionsFor, type InquiryValue, type InquiryAnswer } from '@/lib/du/investigation';
+import { INQUIRIES, inquiryCorrect, inquiryChecks, questionsFor, type InquiryValue, type InquiryAnswer } from '@/lib/du/investigation';
 
 export function Hint({ hints, count, onMore }: { hints: string[]; count: number; onMore: () => void }) {
   return <div className="investigation-hint"><button type="button" className="hint-button" onClick={onMore} disabled={count >= hints.length}>{count === 0 ? '힌트가 필요해요' : count < hints.length ? '힌트 더 보기' : '힌트를 모두 봤어요'}</button>{count > 0 && <p role="status">{hints[Math.min(count, hints.length) - 1]}</p>}</div>;
@@ -21,6 +21,12 @@ export default function Investigation({ id, level, value, onChange }: {
   const [answerPart, setAnswerPart] = useState<'choice' | 'reason'>('choice');
   const source = inquiry.sources.find(s => s.id === sourceId) || inquiry.sources[0];
   const correct = answer.reviewed && inquiryCorrect(question, answer, level);
+  const checks = inquiryChecks(question, answer, level);
+  const reviewParts = [
+    { key: 'sources' as const, label: '자료 선택' },
+    { key: 'choice' as const, label: '내 판단' },
+    ...(level === 'middle' ? [{ key: 'reason' as const, label: '판단 이유' }] : []),
+  ];
   const ready = answer.sources.length > 0 && answer.choice !== undefined && (level === 'elementary' || answer.reason !== undefined);
   function update(change: Partial<InquiryAnswer>, edit = true) {
     onChange({ ...value, answers: { ...value?.answers, [question.id]: { ...answer, ...change, ...(edit ? { reviewed: false } : {}) } } });
@@ -56,7 +62,7 @@ export default function Investigation({ id, level, value, onChange }: {
       <p className="chosen-sources">내 근거: {answer.sources.length ? inquiry.sources.filter(s => answer.sources.includes(s.id)).map(s => s.title).join(' · ') : '자료를 살펴보고 선택하세요.'}</p>
       </div><div className="judgment-actions">
       {level === 'middle' && answerPart === 'choice' ? <button className="primary investigation-submit" disabled={answer.choice === undefined} onClick={() => setAnswerPart('reason')}>이유 선택하기</button> : <button className="primary investigation-submit" disabled={!ready} onClick={() => update({ reviewed: true, attempts: (answer.attempts || 0) + 1, firstChoice: answer.firstChoice ?? answer.choice }, false)}>판단 확인</button>}
-      {answer.reviewed && <div className={'investigation-feedback ' + (correct ? 'is-correct' : '')} role="status"><b>{correct ? '자료와 판단이 연결됐어요.' : '근거와 판단을 다시 살펴보세요.'}</b><p>{correct ? question.explanation : question.retry}</p></div>}
+      {answer.reviewed && <div className={'investigation-feedback ' + (correct ? 'is-correct' : '')} role="status"><b>{correct ? '자료와 판단이 연결됐어요.' : reviewParts.filter(part => !checks[part.key]).map(part => part.label).join(' · ') + ' 항목을 다시 확인해 주세요.'}</b>{correct ? <p>{question.explanation}</p> : <div className="inquiry-checks">{reviewParts.map(part => checks[part.key] ? <span key={part.key}>✓ {part.label} 맞았어요</span> : <button type="button" key={part.key} onClick={() => { if (part.key === 'sources') setPanel('sources'); else { setPanel('judgment'); setAnswerPart(part.key); } }}>{part.label} 다시 보기 →</button>)}</div>}</div>}
       {correct && index < questions.length - 1 && <button className="secondary next-question" onClick={() => selectQuestion(index + 1)}>다음 질문 살펴보기</button>}
       <Hint hints={question.hints} count={answer.hints || 0} onMore={() => update({ hints: Math.min((answer.hints || 0) + 1, question.hints.length) }, false)} />
       </div>

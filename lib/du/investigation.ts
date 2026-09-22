@@ -97,9 +97,16 @@ export const INQUIRIES: Record<string, Inquiry> = {
 
 export function questionsFor(id: string, level: Level) { return INQUIRIES[id].questions.filter(q => !q.middle || level === 'middle'); }
 export function inquiryCorrect(question: InquiryQuestion, value: InquiryAnswer | undefined, level: Level): boolean {
-  if (!value || value.choice !== question.answer || (level === 'middle' && value.reason !== question.reason)) return false;
-  const sources = new Set(value.sources);
-  return sources.size === question.evidence.length && question.evidence.every(id => sources.has(id));
+  const checks = inquiryChecks(question, value, level);
+  return checks.sources && checks.choice && checks.reason;
+}
+export function inquiryChecks(question: InquiryQuestion, value: InquiryAnswer | undefined, level: Level) {
+  const sources = new Set(value?.sources || []);
+  return {
+    sources: sources.size === question.evidence.length && question.evidence.every(id => sources.has(id)),
+    choice: value?.choice === question.answer,
+    reason: level === 'elementary' || value?.reason === question.reason,
+  };
 }
 export function inquiryComplete(id: string, value: InquiryValue | undefined, level: Level): boolean {
   return questionsFor(id, level).every(q => value?.answers?.[q.id]?.reviewed === true && inquiryCorrect(q, value.answers[q.id], level));

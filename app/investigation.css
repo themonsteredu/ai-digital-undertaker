@@ -32,6 +32,8 @@
 .investigation-submit{font-size:15px;padding:11px 18px;min-height:40px}
 .investigation-feedback{margin-top:12px;padding:12px 14px;border-left:3px solid #ba8352;background:#f6efe5;font-size:14px;line-height:1.75}
 .investigation-feedback p{margin-top:5px}.investigation-feedback.is-correct{border-color:var(--primary);background:#e7f2ee}
+.inquiry-checks{display:flex;flex-wrap:wrap;gap:4px 12px;margin-top:5px;align-items:center}
+.inquiry-checks span{color:#075c52}.inquiry-checks button{font:inherit;color:var(--navy);background:transparent;border:0;border-radius:0;padding:3px 0;min-height:30px;text-decoration:underline;text-underline-offset:3px}
 .investigation-hint{margin-top:13px}.hint-button{font-size:12px;border:0;background:transparent;color:var(--muted);padding:6px 0;min-height:30px;text-decoration:underline;text-underline-offset:4px}
 .investigation-hint p{font-size:13px;color:var(--muted);line-height:1.7;padding:8px 0}
 .next-question{font-size:14px;margin-top:12px;padding:9px 12px}

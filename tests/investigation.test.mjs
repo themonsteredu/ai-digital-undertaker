@@ -1,9 +1,17 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { INQUIRIES, questionsFor, inquiryCorrect, inquiryComplete, inquiryFound, choiceComplete } from '../lib/du/investigation.ts';
+import { INQUIRIES, questionsFor, inquiryCorrect, inquiryChecks, inquiryComplete, inquiryFound, choiceComplete } from '../lib/du/investigation.ts';
 import { reviewEvidence } from '../lib/du/evidence.ts';
 
 const answerFor = q => ({ sources: [...q.evidence], choice: q.answer, reason: q.reason, reviewed: true });
+test('correct reasoning stays correct when evidence or conclusion needs revision', () => {
+  const q = INQUIRIES.search.questions.find(q => q.id === 'uncertain');
+  const a = answerFor(q);
+  assert.deepEqual(inquiryChecks(q, { ...a, sources: ['blog'] }, 'middle'), { sources: false, choice: true, reason: true });
+  assert.deepEqual(inquiryChecks(q, { ...a, choice: 0 }, 'middle'), { sources: true, choice: false, reason: true });
+  assert.deepEqual(inquiryChecks(q, { ...a, reason: 0 }, 'middle'), { sources: true, choice: true, reason: false });
+  assert.deepEqual(inquiryChecks(q, { ...a, reason: undefined }, 'elementary'), { sources: true, choice: true, reason: true });
+});
 const samplePhoto = { scene: 'classroom', items: [
   { id: 'name', x: 10, y: 20, w: 10, h: 5 },
   { id: 'school', x: 50, y: 30, w: 20, h: 10 },
